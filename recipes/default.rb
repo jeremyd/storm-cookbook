@@ -27,3 +27,8 @@ bash "Storm install" do
     ::File.exists?("/home/#{node[:storm][:deploy][:user]}/apache-storm-#{node[:storm][:version]}")
   end
 end
+
+execute "reload upstart configuration" do
+  command "initctl reload-configuration"
+  action :nothing
+end

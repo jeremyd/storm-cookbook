@@ -8,13 +8,17 @@ template "Storm conf file" do
   mode 0644
 end
 
-bash "Start nimbus" do
-  user node[:storm][:deploy][:user]
-  cwd "/home/#{node[:storm][:deploy][:user]}"
-  code <<-EOH
-  pid=$(pgrep -f backtype.storm.daemon.nimbus)
-  if [ -z $pid ]; then
-    nohup apache-storm-#{node[:storm][:version]}/bin/storm nimbus >>nimbus.log 2>&1 &
-  fi
-  EOH
+template "/etc/init/storm-nimbus.conf" do
+  source "storm-upstart-conf.erb"
+  variables({
+    :storm_user => node.storm.deploy.user,
+    :storm_home => "/home/#{node.storm.deploy.user}/#{node.storm.version}",
+    :storm_service => "nimbus"
+  )}
+  notifies :run, "execute[reload upstart configuration]", :immediately
+end
+
+service "storm-nimbus" do
+  provider Chef::Provider::Service::Upstart
+  action [:enable, :start]
 end

@@ -8,13 +8,17 @@ template "Storm conf file" do
   mode 0644
 end
 
-bash "Start drpc" do
-  user node[:storm][:deploy][:user]
-  cwd "/home/#{node[:storm][:deploy][:user]}"
-  code <<-EOH
-  pid=$(pgrep -f backtype.storm.daemon.drpc)
-  if [ -z $pid ]; then
-    nohup apache-storm-#{node[:storm][:version]}/bin/storm drpc >>drpc.log 2>&1 &
-  fi
-  EOH
+template "/etc/init/storm-drpc.conf" do
+  source "storm-upstart-conf.erb"
+  variables({
+    :storm_user => node.storm.deploy.user,
+    :storm_home => "/home/#{node.storm.deploy.user}/#{node.storm.version}",
+    :storm_service => "drpc"
+  )}
+  notifies :run, "execute[reload upstart configuration]", :immediately
+end
+
+service "storm-drpc" do
+  provider Chef::Provider::Service::Upstart
+  action [:enable, :start]
 end
