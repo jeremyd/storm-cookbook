@@ -32,3 +32,9 @@ execute "reload upstart configuration" do
   command "initctl reload-configuration"
   action :nothing
 end
+
+directory "/var/log/storm" do
+  owner node.storm.deploy.user
+  group node.storm.deploy.user
+  recursive true
+end
