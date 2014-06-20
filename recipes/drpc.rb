@@ -14,7 +14,7 @@ template "/etc/init/storm-drpc.conf" do
     :storm_user => node.storm.deploy.user,
     :storm_home => "/home/#{node.storm.deploy.user}/#{node.storm.version}",
     :storm_service => "drpc"
-  )}
+  })
   notifies :run, "execute[reload upstart configuration]", :immediately
 end
 

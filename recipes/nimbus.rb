@@ -14,7 +14,7 @@ template "/etc/init/storm-nimbus.conf" do
     :storm_user => node.storm.deploy.user,
     :storm_home => "/home/#{node.storm.deploy.user}/#{node.storm.version}",
     :storm_service => "nimbus"
-  )}
+  })
   notifies :run, "execute[reload upstart configuration]", :immediately
 end
 
