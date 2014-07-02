@@ -7,3 +7,4 @@ version          "0.2.2"
 name             "storm"
 
 depends "lookout-java"
+depends "logrotate"

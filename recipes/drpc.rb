@@ -22,3 +22,11 @@ service "storm-drpc" do
   provider Chef::Provider::Service::Upstart
   action [:enable, :start]
 end
+
+logrotate_app "storm-drpc" do
+  frequency "daily"
+  cookbook "logrotate"
+  path "/var/log/storm/drpc.log"
+  rotate 30
+  create "640 #{node.storm.deploy.user} #{node.storm.deploy.user}"
+end

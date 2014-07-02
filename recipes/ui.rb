@@ -22,3 +22,11 @@ service "storm-ui" do
   provider Chef::Provider::Service::Upstart
   action [:enable, :start]
 end
+
+logrotate_app "storm-ui" do
+  frequency "daily"
+  cookbook "logrotate"
+  path "/var/log/storm/ui.log"
+  rotate 30
+  create "640 #{node.storm.deploy.user} #{node.storm.deploy.user}"
+end
