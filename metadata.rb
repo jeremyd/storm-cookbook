@@ -6,5 +6,4 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.2.2"
 name             "storm"
 
-depends "lookout-java"
 depends "logrotate"
