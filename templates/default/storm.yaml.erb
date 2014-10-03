@@ -1,0 +1,23 @@
+###########
+########### Base storm configuration options
+########### These MUST be filled in for a storm configuration
+storm.zookeeper.servers:
+<% node[:storm][:supervisor][:hosts].each do |host| %>
+- "<%= host %>"
+<% end %>
+
+storm.local.dir: "/home/<%= node[:storm][:deploy][:user] %>/storm-data"
+java.library.path: "/usr/local/lib"
+
+nimbus.host: "<%= node[:storm][:nimbus][:host] %>"
+
+<% if node[:storm][:ui].has_key?(:is_ui_host) -%>
+<%= render "ui.yaml.erb" -%>
+<% end -%>
+<% if node[:storm][:nimbus].has_key?(:is_nimbus_host) -%>
+<%= render "nimbus.yaml.erb" -%>
+<% end -%>
+<% if node[:storm][:supervisor].has_key?(:is_supervisor_host) -%>
+<%= render "nimbus.yaml.erb" -%>
+<% end -%>
+###########

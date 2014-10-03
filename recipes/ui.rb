@@ -1,12 +1,6 @@
 include_recipe "storm"
 
-template "Storm conf file" do
-  path "/home/#{node[:storm][:deploy][:user]}/apache-storm-#{node[:storm][:version]}/conf/storm.yaml"
-  source "ui.yaml.erb"
-  owner node[:storm][:deploy][:user]
-  group node[:storm][:deploy][:group]
-  mode 0644
-end
+node.set[:storm][:ui][:is_ui_host] = true
 
 template "/etc/init/storm-ui.conf" do
   source "storm-upstart-conf.erb"

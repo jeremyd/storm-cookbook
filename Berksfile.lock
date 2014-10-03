@@ -1,0 +1,9 @@
+DEPENDENCIES
+  storm
+    path: .
+    metadata: true
+
+GRAPH
+  logrotate (1.7.0)
+  storm (0.2.3)
+    logrotate (>= 0.0.0)
