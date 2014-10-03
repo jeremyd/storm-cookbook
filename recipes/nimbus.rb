@@ -1,12 +1,6 @@
 include_recipe "storm"
 
-template "Storm conf file" do
-  path "/home/#{node[:storm][:deploy][:user]}/apache-storm-#{node[:storm][:version]}/conf/storm.yaml"
-  source "nimbus.yaml.erb"
-  owner node[:storm][:deploy][:user]
-  group node[:storm][:deploy][:group]
-  mode 0644
-end
+node.set[:storm][:nimbus][:is_nimbus_host] = true
 
 template "/etc/init/storm-nimbus.conf" do
   source "storm-upstart-conf.erb"

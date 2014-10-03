@@ -1,13 +1,4 @@
-########### These MUST be filled in for a storm configuration
-storm.zookeeper.servers:
-<% node[:storm][:supervisor][:hosts].each do |host| %>
-- "<%= host %>"
-<% end %>
-
-storm.local.dir: "/home/<%= node[:storm][:deploy][:user] %>/storm-data"
-java.library.path: "/usr/local/lib"
-
-nimbus.host: "<%= node[:storm][:nimbus][:host] %>"
+########### This is the partial template for storm-supervisor
 
 worker.childopts: "<%= node[:storm][:worker][:childopts] %>"
 supervisor.childopts: "<%= node[:storm][:supervisor][:childopts] %>"
